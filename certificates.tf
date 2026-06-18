@@ -100,6 +100,11 @@ resource "aws_acm_certificate" "server" {
   tags              = local.tags
   lifecycle {
     create_before_destroy = true
+
+    # AWS Client VPN caches the server certificate and does not reload one re-imported
+    # under the same ACM ARN. Forcing a new ARN whenever the signed leaf changes makes
+    # the provider update the endpoint's server_certificate_arn, which reloads the cert.
+    replace_triggered_by = [tls_locally_signed_cert.server[0]]
   }
 }
 
