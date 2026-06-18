@@ -60,6 +60,8 @@ resource "tls_cert_request" "server" {
   count           = var.create_server_certificate ? 1 : 0
   private_key_pem = tls_private_key.server[0].private_key_pem
 
+  dns_names = length(var.server_dns_names) > 0 ? var.server_dns_names : compact([lookup(var.server_subject, "common_name", null)])
+
   subject {
     common_name         = lookup(var.server_subject, "common_name", null)
     country             = lookup(var.server_subject, "country", null)
