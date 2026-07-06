@@ -205,12 +205,13 @@ variable "server_subject" {
 variable "server_dns_names" {
   description = <<-EOT
     DNS Subject Alternative Names (SANs) for the server certificate. When empty,
-    defaults to the server_subject common_name so the leaf certificate always
-    carries a SAN. Required because Go 1.15+ TLS stacks (used by many OpenVPN
-    clients) reject certificates that rely on the legacy Common Name field.
+    falls back to the server_subject common_name if one is set. Provide a SAN
+    here (or a common_name) to avoid certificates that rely only on the legacy
+    Common Name field, which Go 1.15+ TLS stacks used by many OpenVPN clients
+    reject.
   EOT
-  type    = list(string)
-  default = []
+  type        = list(string)
+  default     = []
 }
 
 variable "client_subject" {

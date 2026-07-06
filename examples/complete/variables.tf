@@ -74,6 +74,12 @@ variable "server_subject" {
   }
 }
 
+variable "server_dns_names" {
+  description = "DNS Subject Alternative Names (SANs) for the server certificate. Demonstrates emitting an explicit SAN so the leaf does not rely on the legacy Common Name."
+  type        = list(string)
+  default     = ["server.complete.local"]
+}
+
 variable "client_subject" {
   description = "The subject for which client certificate is being requested. The acceptable arguments are all optional "
   type        = any

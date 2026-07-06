@@ -27,6 +27,7 @@ module "complete_client_vpn" {
   }]
   ca_subject                  = var.ca_subject
   server_subject              = var.server_subject
+  server_dns_names            = var.server_dns_names
   create_client_certificate   = var.create_client_certificate
   client_subject              = var.client_subject
   authentication_options      = var.authentication_options
